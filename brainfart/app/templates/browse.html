@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<title>Browse Notes</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <h1>Browse Notes</h1>
+  <nav class="navbar">
+    <ul class="nav-list">
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('main.home') }}">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('main.manage_audio') }}">Manage Audio</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('main.browse') }}">All Notes</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('main.transcripts') }}">Transcripts</a></li>
+    </ul>
+  </nav>
+  {% if notes %}
+    <div class="note-list">
+      {% for note in notes %}
+        <div class="note-card">
+          <a href="{{ url_for('main.note', note_id=note.filename) }}">
+            <h2>{{ note.title }}</h2>
+          </a>
+          <p><small>{{ note.date }} | {{ note.category }}</small></p>
+          <p>{{ note.summary }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No notes available.</p>
+  {% endif %}
+</body>
+</html>

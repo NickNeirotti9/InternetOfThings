@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<title>Manage Audio</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+  <h1>Audio Management</h1>
+  <nav class="navbar">
+    <ul class="nav-list">
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('main.home') }}">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('main.manage_audio') }}">Manage Audio</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('main.browse') }}">All Notes</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('main.transcripts') }}">Transcripts</a></li>
+    </ul>
+  </nav>
+  
+  <!-- flashes -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for msg in messages %}
+            <li>{{ msg }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+  <!-- unarchived files -->
+  <h2>Available Audio</h2>
+  <form id="audio-actions" method="POST">
+    <label>
+      <input type="checkbox" onclick="toggleAll(this,'archive-actions')">
+      Select All
+    </label><br>
+    
+    <div id="audio-list">
+        {% for f in unarchived %}
+          <label>
+            <input type="checkbox" name="files" value="{{ f }}">
+            {{ f }}
+          </label><br>
+        {% endfor %}
+    </div>
+
+    <button id="summarize-btn" type="button">
+      Summarize Selected
+    </button>
+
+    <button id="archive-btn" formaction="{{ url_for('main.archive_audio') }}" formmethod="post">
+      Archive Selected
+    </button>
+  </form>
+  <div id="progress"></div>
+
+  <hr>
+
+  <!-- archived files -->
+  <h2>Archived Audio</h2>
+  <form id="archive-actions" method="POST" action="{{ url_for('main.unarchive_audio') }}">
+    <label>
+      <input type="checkbox" onclick="toggleAll(this,'archive-actions')">
+      Select All
+    </label><br>
+
+    {% for f in archived %}
+      <label>
+        <input type="checkbox" name="files" value="{{ f }}">
+        {{ f }}
+      </label><br>
+    {% endfor %}
+    
+    <button type="submit">Unarchive Selected</button>
+  </form>
+  <div id="progress"></div>
+
+<!--Expose Flask URLs so my js file can call them without hard‑coding routes-->
+<script>
+  window.BF = {
+    transcribeOne:    "{{ url_for('main.transcribe_one') }}",
+    summarizeOne:     "{{ url_for('main.summarize_one') }}",
+    recentNotes:      "{{ url_for('main.recent_notes') }}",
+    availableAudio:   "{{ url_for('main.available_audio') }}",
+  };
+</script>
+<script src="{{ url_for('static', filename='js/brainfart.js') }}"></script>
+
+</body>
+</html>
+
+

@@ -1,0 +1,147 @@
+:root {
+  --bg:          #ECF0F1;
+  --surface:     #FFFFFF;
+  --primary:     #2C3E50;
+  --secondary:   #18BC9C;
+  --accent:      #F39C12;
+  --border:      #BDC3C7;
+  --text:        #2C3E50;
+  --text-light:  #7F8C8D;
+  --font-stack:  'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Base */
+{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-stack);
+  line-height: 1.6;
+  padding: 20px;
+}
+
+/* Headings */
+h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+h2 {
+  font-size: 1.5rem;
+  margin: 1rem 0 1rem;
+}
+.note-card h2{
+margin: 1rem 0 0rem;
+}
+
+/* Navbar */
+.navbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+  text-align: center;
+}
+.nav-list {
+  display: inline-flex;
+  list-style: none;
+  gap: 1.5rem;
+}
+.nav-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+.nav-link:hover {
+  color: var(--secondary);
+}
+
+/* Flash Messages */
+.flashes {
+  list-style: none;
+  margin-bottom: 1rem;
+}
+.flashes li {
+  background: var(--surface);
+  border-left: 4px solid var(--accent);
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+/* Forms & Inputs */
+form {
+  margin-bottom: 1.5rem;
+}
+label {
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+input[type="checkbox"] {
+  margin-right: 0.5rem;
+  transform: translateY(1px);
+  cursor: pointer;
+}
+#sync-form {
+    margin-bottom: 0rem;
+}
+
+/* Buttons */
+button {
+  background: var(--primary);
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  padding: 0.5rem 1rem;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: var(--secondary);
+}
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Lists */
+ul {
+  list-style: none;
+}
+
+a {
+  color: var(--secondary);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Divs */
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1rem 0;
+}
+#progress,
+#recent-notes-container,
+#audio-list-container {
+  margin-top: 1rem;
+}
+
+/* transcripts */
+pre {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: monospace;
+  margin-top: 0.5rem;
+  overflow-x: auto;
+  padding: 0.75rem;
+}

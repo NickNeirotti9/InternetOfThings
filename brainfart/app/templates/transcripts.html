@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+  <title>All Transcripts</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <h1>All Transcripts</h1>
+    <nav class="navbar">
+      <ul class="nav-list">
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('main.home') }}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('main.manage_audio') }}">Manage Audio</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('main.browse') }}">All Notes</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('main.transcripts') }}">Transcripts</a></li>
+      </ul>
+    </nav>
+
+  {% if transcripts %}
+    <ul>
+      {% for t in transcripts %}
+        <li>
+          <pre style="white-space: pre-wrap; font-family: inherit;">{{ t.text }}</pre>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No transcripts found.</p>
+  {% endif %}
+</body>
+</html>

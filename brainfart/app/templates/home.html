@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+  <title>Brainfart — Home</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <h1>Brainfart</h1>
+  <nav class="navbar">
+    <ul class="nav-list">
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('main.home') }}">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('main.manage_audio') }}">Manage Audio</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('main.browse') }}">All Notes</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('main.transcripts') }}">Transcripts</a></li>
+    </ul>
+  </nav>
+  
+  <!-- flashes-->
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <ul class="flashes">
+    {% for msg in messages %}
+    <li>{{ msg }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
+
+  <!-- sync button and loading message-->
+  <form id="sync-form" action="{{ url_for('main.sync_audio') }}" method="POST">
+    <button id="sync-btn" type="submit">Sync Audio Files</button>
+    <span id="sync-spinner" style="display:none">Syncing…</span>
+  </form>
+  <hr>
+
+<!-- select all feature -->
+<div id="audio-list-container">
+  <form id="audio-actions" method="POST">
+    <!-- Select All -->
+    <label>
+      <input type="checkbox" onclick="toggleAll(this, 'audio-actions')">
+      Select All
+    </label><br>
+
+<!-- checkboxes -->
+<div id="audio-list">
+    {% for f in audio_files %}
+    <label>
+      <input type="checkbox" name="files" value="{{ f }}">
+      {{ f }}
+    </label><br>
+    {% endfor %}
+</div>
+
+    <!-- summarize selected-->
+    <button id="summarize-btn" type="button">
+      Summarize Selected
+    </button>
+
+    <!-- archive selected-->
+    <button id="archive-btn" formaction="{{ url_for('main.archive_audio') }}" formmethod="post">
+      Archive Selected
+    </button>
+  </form>
+  </div>
+  
+  <div id="progress"></div>
+  <hr>
+  
+  <!-- 5 most  recent notes -->
+  <h2>Recent Notes</h2>
+  <div id="recent-notes-container">
+    {% if notes %}
+    <ul id="recent-notes-list">
+      {% for note in notes %}
+      <li data-filename="{{ note.filename }}">
+        <a href="{{ url_for('main.note', note_id=note.filename) }}">
+          <strong>{{ note.title }}</strong>
+        </a>
+        <small>({{ note.date }} | {{ note.category }})</small><br>
+        <em>{{ note.summary }}</em>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p id="recent-notes-list">No notes yet.</p>
+    {% endif %}
+  </div>
+  
+<!--Expose Flask URLs so my js file can call them without hard‑coding routes-->
+<script>
+  window.BF = {
+    transcribeOne:    "{{ url_for('main.transcribe_one') }}",
+    summarizeOne:     "{{ url_for('main.summarize_one') }}",
+    recentNotes:      "{{ url_for('main.recent_notes') }}",
+    availableAudio:   "{{ url_for('main.available_audio') }}",
+  };
+</script>
+<script src="{{ url_for('static', filename='js/brainfart.js') }}"></script>
+</body>
+</html>
