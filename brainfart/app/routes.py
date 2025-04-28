@@ -3,6 +3,7 @@ import os
 import json
 import subprocess
 import glob
+import sys
 from datetime import datetime
 from .utils import get_all_notes, load_note, sorted_audio, get_all_transcripts, date_from_filename
 from backend.transcribe import transcribe_file
@@ -36,7 +37,7 @@ def note(note_id):
 
 @main.route("/sync", methods=["POST"])
 def sync_audio():
-    proc = subprocess.run(["python3", "backend/sync_audio.py"],check=True,capture_output=True,text=True)
+    proc = subprocess.run([sys.executable, "backend/sync_audio.py"],check=True,capture_output=True,text=True)
     out = proc.stdout.strip()
 
     if out == "NO_DEVICE":
