@@ -4,6 +4,7 @@ import shutil
 
 def sync_audio():
     device_mount = "/media/pi/USB-DISK"          #path to audio files
+    #device_mount = "D:/"
     audio_dir    = os.path.join(device_mount, "RECORD") 
     dest_dir     = os.path.join("data", "raw_audio") 
     archive_dir = os.path.join("data", "raw_audio_archive")
